@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/output.css">
+    <title>Gestion de Depense</title>
+</head>
+<body class="font-mono">
+    <!-- Formulaire d'ajout de depense -->
+     <div class="depense flex flex-col gap-1 justify-center items-center my-2 mx-auto p-1">
+        <form action="" class="flex flex-col gap-2 w-full text-blue-700 p-1">
+            <input type="number" placeholder="Montant en Fcfa" required class="rounded-lg ring-1 ring-blue-300 p-1 font-bold text-center">
+            <select name="categorie" id="categorie" class="rounded-lg ring-1 ring-blue-300 p-1">
+                <option value="transport">Transport</option>
+                <option value="nourriture">Nourriture</option>
+                <option value="facture">Facture</option>
+                <option value="creditTel">Crédit Téléphonique</option>
+                <option value="autres">Autres</option>
+            </select>
+            <textarea name="description" id="description" class="rounded-lg ring-1 ring-blue-300 p-1" placeholder="Description"></textarea>
+            <input type="submit" value="Ajouter" class="rounded-lg ring-1 ring-blue-300 text-slate-200 bg-blue-700 p-1 font-medium">
+        </form>
+     </div>
+</body>
+</html>
