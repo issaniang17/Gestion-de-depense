@@ -4,13 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="./script/config.js" defer></script>
     <title>Gestion de Depense</title>
 </head>
-<body class="font-mono">
+<body class="font-mono bg-[#f9fafb]">
+    <!-- Accueil -->
+    <div class="acceuil w-screen h-screen grid grid-cols-1 grid-rows-[100px_100px_1fr]">
+        <div class="montant  flex justify-center items-center bg-[#1e3a8a] text-white leading-relaxed rounded-2xl mx-3 my-2 shadow-xl/20 font-bold text-2xl">
+            <p id="somme"><span id="total">0</span>f <span id="masqueAffiche"><i class="fa-solid fa-eye"></i></span></p>
+        </div>
+        <div class="icone  flex justify-around items-center gap-2 p-2">
+            <div class="text-center text-lg">
+                <button class=" text-white bg-blue-700 p-1.5  rounded-full"><i class="fa-solid fa-car-side"></i></button>
+                <p class="text-xs font-bold">Transport</p>
+            </div>
+            <div class="text-center text-lg">
+                <button class=" text-white bg-blue-700 p-1.5  rounded-full"><i class="fa-solid fa-bowl-rice"></i></button>
+                <p class="text-xs font-bold">Nourriture</p>
+            </div>
+            <div class="text-center text-lg">
+                <button class=" text-white bg-blue-700 p-1.5  rounded-full"><i class="fa-solid fa-file"></i></button>
+                <p class="text-xs font-bold">Facture</p>
+            </div>
+        </div>
+        <div class="historique bg-blue-600 text-slate-300 flex gap-1.5 flex-col"></div>
+        <button id="ajouter" class="absolute right-2 bottom-5 font-bold text-2xl bg-blue-900 p-1 rounded-full text-slate-200"><i class="fa-solid fa-plus"></i></button>
+    </div>
     <!-- Formulaire d'ajout de depense -->
-     <div class="depense flex flex-col gap-1 justify-center items-center my-2 mx-auto p-1">
-        <form action="" class="flex flex-col gap-2 w-full text-blue-700 p-1">
-            <input type="number" placeholder="Montant en Fcfa" required class="rounded-lg ring-1 ring-blue-300 p-1 font-bold text-center">
+     <div class="depense hidden flex flex-col gap-1 justify-center items-center my-0 mx-auto p-1 absolute top-0 left-0 h-screen w-screen bg-[#f9fafb]">
+        <div  class="absolute top-0 left-0 text-blue-900"><button id="backBtn"><i class="fa-solid fa-angle-left"></i></button></div>
+        <div id="erreur"></div>
+        <form action="" class="flex flex-col gap-2 w-full text-blue-700 p-1" name="ajouter-depense">
+            <input type="number" placeholder="Montant en Fcfa" required class="rounded-lg ring-1 ring-blue-300 p-1 font-bold text-center" id="montantDepense">
             <select name="categorie" id="categorie" class="rounded-lg ring-1 ring-blue-300 p-1">
                 <option value="transport">Transport</option>
                 <option value="nourriture">Nourriture</option>
@@ -19,7 +45,7 @@
                 <option value="autres">Autres</option>
             </select>
             <textarea name="description" id="description" class="rounded-lg ring-1 ring-blue-300 p-1" placeholder="Description"></textarea>
-            <input type="submit" value="Ajouter" class="rounded-lg ring-1 ring-blue-300 text-slate-200 bg-blue-700 p-1 font-medium">
+            <input id="valider" type="submit" value="Ajouter" class="rounded-lg ring-1 ring-blue-300 text-slate-200 bg-blue-700 p-1 font-medium">
         </form>
      </div>
 </body>
