@@ -1,16 +1,21 @@
 // Recuperation des variables
 let total = document.getElementById("total");
-let eyes = document.getElementById("masqueAffiche")
-
+let eyes = document.getElementById("masqueAffiche");
 let montant = 0;
-
+let listHistorique = [];
 let ajoutBtn = document.getElementById('ajouter');
 let getDepenseForm = document.querySelector('.depense');
 let backBtn = document.getElementById("backBtn");
 
 let historique = document.querySelector('.historique');
 
-
+if(getStorage()){
+    montant = Number(localStorage.getItem('totalSum'));
+    console.log(montant)
+    // localStorage.clear()
+    total.textContent = montant;
+    getHistorique();
+}
 // Formulaire de depense
 const valideRegx = /^[^-+][0-9]{1,5}$/;
 let montantDepense = document.getElementById('montantDepense');
@@ -41,6 +46,7 @@ ajoutBtn.addEventListener('click', ()=>{
     getDepenseForm.classList.toggle('hidden');
     backBtn.addEventListener('click', () =>{
         getDepenseForm.classList.add('hidden');
+        erreur.classList.add('hidden');
     })
 })
 
@@ -51,6 +57,7 @@ function valideForm(amont){
         validateFormBtn.addEventListener('click', (event)=>{
             event.preventDefault();
             montant += Number(amont.value);
+            localStorage.setItem('totalSum', montant);
             total.textContent = montant;
            if(amont.value > 0 || amont.value !== ''){
              setHistorique(historique, amont.value);
@@ -61,11 +68,13 @@ function valideForm(amont){
         })
         
     }else{
-        erreur.innerHTML = `<p style="border:1px #F60000; padding:2px; border-radius:5px; color:#FF3939">Somme Invalide</p>`;
+        erreur.innerHTML = `<p style="border:1px solid #F60000; padding:2px; border-radius:5px; color:#FF3939">Somme Invalide</p>`;
         amont.value = ''
         validateFormBtn.disabled = true;
         
     }
+    // localStorage.clear()
+    // console.log(localStorage)
 }
 montantDepense.addEventListener('change', ()=>{
     valideForm(montantDepense)
@@ -73,14 +82,32 @@ montantDepense.addEventListener('change', ()=>{
 
 // Inserer l'historique
 function setHistorique(histSection, amount){
-    const Temps = Temporal.Now.plainDateTimeISO();
-    histSection.innerHTML += `<div class="flex justify-between">
+    const Temps = new Date().toLocaleString().split(' ');
+    histSection.innerHTML += `<div class="flex justify-between mx-1.5 leading-relaxed border border-white rounded-lg mt-1 p-1">
         <div>
             <p>${amount}</p>
-            <p>${Temps.year} ${Temps.day}-${Temps.hour}-${Temps.minute}</p>
+            <p>${Temps[0]} à ${Temps[1]}</p>
         </div>
         <div>
             ${categorieDepense.value}
         </div>
     </div>`;
+    listHistorique.push(histSection.outerHTML);
+    localStorage.setItem('listDepense', JSON.stringify(listHistorique))
+}
+
+function getStorage(){
+    let saved = localStorage.getItem('totalSum');
+    return saved;
+}
+function getHistorique(){
+    let histoList = localStorage.getItem('listDepense');
+    listHistorique = JSON.parse(histoList);
+    for(let i = 0; i < listHistorique.length; i++){
+        if(i===5){
+            return;
+        }
+        historique.innerHTML = listHistorique[i];
+    }
+    
 }
