@@ -83,16 +83,20 @@ montantDepense.addEventListener('change', ()=>{
 // Inserer l'historique
 function setHistorique(histSection, amount){
     const Temps = new Date().toLocaleString().split(' ');
-    histSection.innerHTML += `<div class="flex justify-between mx-1.5 leading-relaxed border border-white rounded-lg mt-1 p-1">
-        <div>
+    let div = document.createElement('div');
+    div.classList = 'flex justify-between mx-1.5 leading-relaxed border border-white rounded-lg mt-1 p-1';
+    div.innerHTML = `<div>
             <p>${amount}</p>
             <p>${Temps[0]} à ${Temps[1]}</p>
         </div>
         <div>
             ${categorieDepense.value}
         </div>
-    </div>`;
-    listHistorique.push(histSection.outerHTML);
+    </div>`
+    console.log(div)
+    histSection.appendChild(div);
+    listHistorique.unshift(div.outerHTML);
+    console.log(listHistorique)
     localStorage.setItem('listDepense', JSON.stringify(listHistorique))
 }
 
@@ -103,11 +107,25 @@ function getStorage(){
 function getHistorique(){
     let histoList = localStorage.getItem('listDepense');
     listHistorique = JSON.parse(histoList);
+    console.log(listHistorique);
     for(let i = 0; i < listHistorique.length; i++){
         if(i===5){
             return;
         }
-        historique.innerHTML = listHistorique[i];
+        historique.innerHTML += listHistorique[i];
     }
     
 }
+// vider le localStorage
+
+function viderLocalStorage(){
+    localStorage.clear();
+    historique.textContent = '';
+    montant = 0;
+    total.textContent = montant;
+    listHistorique = []
+    console.log(localStorage)
+}
+
+let resetBtn = document.getElementById('reset-btn');
+resetBtn.addEventListener('click',() =>viderLocalStorage());
